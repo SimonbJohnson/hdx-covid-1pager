@@ -1,0 +1,21 @@
+bar {
+	height:10px;
+	background-color:#1ebfb3;
+	display:block;
+	margin-top:5px;
+}
+
+.rightalign {
+	text-align:right;
+}
+
+thead {
+	font-weight:600;
+}
+
+p { font-size:16px; }
+
+.variable {
+	color:#009688;
+	font-weight:600;
+}

@@ -1,0 +1,61 @@
+<html>
+    <head>
+        <title>Crises timeline</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="css/site.css"/>
+        <script src="js/jquery.js"></script>
+        <script src="js/d3.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="https://unpkg.com/papaparse@5.1.1/papaparse.min.js"></script>
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-46399763-1']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                 var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                 ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                 var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+        </script>         
+    </head>
+    <body>
+        <div id="content" class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h2>Title</h2>
+                    <p>General details and caveats. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <h4>Week of xx/xx/2020</h4>
+                    <p>There was a rise in new cases <span class="variable">16</span> out of the 24 HRP funded countries. <span class="variable">Iraq</span> country had the highest number of new cases this week with <span class="variable">30,059</span> cases which has a funding gap of <span class="variable">56%</span>. <span class="variable">Myanmar</span> saw the quickest increase in new cases (for countries with over 100 new cases a week) with a <span class="variable">159%</span> increase. <span class="variable">Venezuela</span> has the largest funding gap of the countries seeing new cases increase by more than 10%.</p>.
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <h4>Top 10 HRP Countries for New Cases</h4>
+                    <table id="maintable" class="table">
+                        <thead>
+                            <tr>
+                                <td>Country Name</td>
+                                <td class="rightalign">New Cases (last 7 days)</td>
+                                <td></td>
+                                <td></td>
+                                <td class="rightalign">Funding (COVID HRP)</td>
+                                <td></td>
+                                <td class="rightalign">People in Need</td>
+                                <td></td>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <script src="js/out.js"></script>    
+        <script src="js/site.js"></script>    
+    </body>
+</html>
