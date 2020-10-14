@@ -86,31 +86,36 @@ function calcMax(data){
 }
 
 function createTable(config,data){
-	keys = ['#indicator+newcases','#value+covid+funding+hrp+pct','#affected+inneed'];
+	barKeys = ['#indicator+ht+newcases','#indicator+newcases','#value+covid+funding+hrp+pct','#affected+inneed'];
 	data = data.sort(function(a,b){
-		return parseFloat(b['#indicator+newcases']) - parseFloat(a['#indicator+newcases']);
+		return parseFloat(b['#indicator+ht+newcases']) - parseFloat(a['#indicator+ht+newcases']);
 	});
 	console.log(data);
 	console.log(config);
 	data.slice(0,10).forEach(function(d,i){
 		console.log(d['#country+name']);
-		let html = '<tr><td>'+d['#country+name']+'</td><td class="rightalign">'+d['#indicator+newcases']+'</td><td><img id="arrow_'+i+'" class="arrow" src="arrow.svg" height="20px"></td><td><bar id="bar_1_'+i+'"></bar></td><td class="rightalign">'+Math.round(d['#value+covid+funding+hrp+pct']*100)+'%</td><td><bar id="bar_2_'+i+'"></bar></td><td class="rightalign">'+Math.round(d['#affected+inneed'])+'</td><td><bar id="bar_3_'+i+'"></bar></td></tr>';
+		let html = '<tr><td>'+d['#country+name']+'</td>'
+		html += '<td class="rightalign">'+(numberWithCommas(Math.round(d['#indicator+ht+newcases']*10)/10))+'</td><td><img id="arrow_'+i+'" class="arrow" src="arrow.svg" height="20px"></td><td><div id="bar_0_'+i+'" class="bar"></bar></td>'
+		html += '<td class="rightalign">'+(numberWithCommas(d['#indicator+newcases']))+'</td><td><div id="bar_1_'+i+'" class="bar"></div></td>'
+		html += '<td class="rightalign">'+(numberWithCommas(d['#indicator+cumulative+deaths']))+'</td>'
+		html += '<td class="rightalign">'+(numberWithCommas(d['#indicator+newdeaths']))+'</td>'
+		html += '<td class="rightalign"></td>'
+		html += '<td class="rightalign">'+(numberWithCommas(Math.round(d['#value+covid+funding+hrp+pct']*100)))+'%</td><td><div id="bar_2_'+i+'" class="bar"></div></td>'
+		html += '<td class="rightalign">'+(numberWithCommas(Math.round(d['#affected+inneed'])))+'</td><td><div id="bar_3_'+i+'" class="bar"></div></td>'
+		html += '</tr>';
 		$('#maintable').append(html);
-		keys.forEach(function(k,j){
-			let id = '#bar_'+(j+1)+'_'+i;
-			let width = Math.floor(d[k]/config[k]*100);
+		barKeys.forEach(function(k,j){
+			let id = '#bar_'+(j)+'_'+i;
+			let width = Math.floor(d[k]/config[k]*50);
 			$(id).width(width);
 		});
 		let rotate = d['#indicator+newcaseschange']/10*-45;
-		console.log(d['#indicator+newcaseschange']);
-		console.log(rotate);
 		if(rotate<-45){
 			rotate = -45
 		}
 		if(rotate>45){
 			rotate = 45
 		}
-		console.log(rotate);
 		$('#arrow_'+i).css({
         "-webkit-transform": "rotate("+rotate+"deg)",
         "-moz-transform": "rotate("+rotate+"deg)",
@@ -119,6 +124,9 @@ function createTable(config,data){
 	});
 }
 
+function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
 
 //load 3W data
 

@@ -1,8 +1,16 @@
-bar {
+.bar {
 	height:10px;
 	background-color:#1ebfb3;
 	display:block;
 	margin-top:5px;
+	-webkit-print-color-adjust:exact;
+}
+
+@media print {
+	.bar {
+		background-color:#1ebfb3!important;
+	    -webkit-print-color-adjust:exact;
+	}
 }
 
 .rightalign {
@@ -13,9 +21,43 @@ thead {
 	font-weight:600;
 }
 
-p { font-size:16px; }
+p { font-size:13px; }
 
 .variable {
 	color:#009688;
 	font-weight:600;
+}
+
+@media print {
+	.variable {
+		color:#009688! important;
+	}
+}
+
+table {
+	font-size:11px;
+}
+
+body {
+  -webkit-print-color-adjust: exact;
+  margin-left:30px;
+  margin-right:30px;
+}
+
+@media print { bar { -webkit-print-color-adjust: exact; } }
+
+.countrycol {
+	width:15%;
+}
+
+.datacol {
+	width:10%;
+}
+
+.arrowcol {
+	width:5%;
+}
+
+.barcol {
+	width:5%;
 }
