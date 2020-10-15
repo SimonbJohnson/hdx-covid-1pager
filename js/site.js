@@ -48,14 +48,28 @@ function init(dataHXLProxy,data){
 function prepData(dataHXLProxy,data){
 	let output = dataHXLProxy;
 	output = addColumn(output,data,'national_data','#value+covid+funding+hrp+pct');
-	output = output.filter(function(d){
+	output.forEach(function(d){
 		if(d['#value+covid+funding+hrp+pct']==undefined){
-			return false
+			d['#value+covid+funding+hrp+txt'] = '-';
+			d['#value+covid+funding+hrp+pct'] = 0
 		} else {
-			return true;
+			d['#value+covid+funding+hrp+txt'] = Math.round(d['#value+covid+funding+hrp+pct']*100)+'%';
 		}
 	});
 	output = addColumn(output,data,'national_data','#affected+inneed');
+	output.forEach(function(d){
+		if(d['#affected+inneed']==undefined){
+			d['#affected+inneed'] = '-';
+		} else {
+			d['#affected+inneed'] = numberWithCommas(d['#affected+inneed']);
+		}
+	});
+	output = addColumn(output,data,'national_data','#affected+tested+per1000');
+	output.forEach(function(d){
+		if(d['#affected+tested+per1000']==undefined){
+			d['#affected+tested+per1000']= ''
+		}
+	});
 	return output;
 }
 
@@ -86,22 +100,22 @@ function calcMax(data){
 }
 
 function createTable(config,data){
-	barKeys = ['#indicator+ht+newcases','#indicator+newcases','#value+covid+funding+hrp+pct','#affected+inneed'];
+	barKeys = ['#indicator+ht+newcases','#indicator+newcases','#value+covid+funding+hrp+pct'];
 	data = data.sort(function(a,b){
 		return parseFloat(b['#indicator+ht+newcases']) - parseFloat(a['#indicator+ht+newcases']);
 	});
 	console.log(data);
 	console.log(config);
-	data.slice(0,10).forEach(function(d,i){
+	data.slice(0,15).forEach(function(d,i){
 		console.log(d['#country+name']);
 		let html = '<tr><td>'+d['#country+name']+'</td>'
 		html += '<td class="rightalign">'+(numberWithCommas(Math.round(d['#indicator+ht+newcases']*10)/10))+'</td><td><img id="arrow_'+i+'" class="arrow" src="arrow.svg" height="20px"></td><td><div id="bar_0_'+i+'" class="bar"></bar></td>'
 		html += '<td class="rightalign">'+(numberWithCommas(d['#indicator+newcases']))+'</td><td><div id="bar_1_'+i+'" class="bar"></div></td>'
 		html += '<td class="rightalign">'+(numberWithCommas(d['#indicator+cumulative+deaths']))+'</td>'
 		html += '<td class="rightalign">'+(numberWithCommas(d['#indicator+newdeaths']))+'</td>'
-		html += '<td class="rightalign"></td>'
-		html += '<td class="rightalign">'+(numberWithCommas(Math.round(d['#value+covid+funding+hrp+pct']*100)))+'%</td><td><div id="bar_2_'+i+'" class="bar"></div></td>'
-		html += '<td class="rightalign">'+(numberWithCommas(Math.round(d['#affected+inneed'])))+'</td><td><div id="bar_3_'+i+'" class="bar"></div></td>'
+		html += '<td class="rightalign">'+Math.round(d['#affected+tested+per1000'])+'</td>'
+		html += '<td class="rightalign">'+(d['#value+covid+funding+hrp+txt'])+'</td><td><div id="bar_2_'+i+'" class="bar"></div></td>'
+		html += '<td class="rightalign">'+d['#affected+inneed']+'</td>'
 		html += '</tr>';
 		$('#maintable').append(html);
 		barKeys.forEach(function(k,j){
@@ -117,10 +131,10 @@ function createTable(config,data){
 			rotate = 45
 		}
 		$('#arrow_'+i).css({
-        "-webkit-transform": "rotate("+rotate+"deg)",
-        "-moz-transform": "rotate("+rotate+"deg)",
-        "transform": "rotate("+rotate+"deg)" /* For modern browsers(CSS3)  */
-    });
+	        "-webkit-transform": "rotate("+rotate+"deg)",
+	        "-moz-transform": "rotate("+rotate+"deg)",
+	        "transform": "rotate("+rotate+"deg)" /* For modern browsers(CSS3)  */
+    	});
 	});
 }
 

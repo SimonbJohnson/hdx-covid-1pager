@@ -6,6 +6,24 @@
 	-webkit-print-color-adjust:exact;
 }
 
+h1, h2, h3, h3, h4 {
+	font-family: 'Source Sans Pro', sans-serif;
+}
+
+h1 {
+	font-size:3.8rem;
+	margin-bottom:8px;
+	margin-top:4px;
+}
+
+h2 {
+	font-size:1.8rem;
+	text-transform: uppercase;
+	margin-bottom:8px;
+	margin-top:4px;
+	font-weight:600;
+}
+
 @media print {
 	.bar {
 		background-color:#1ebfb3!important;
@@ -17,11 +35,10 @@
 	text-align:right;
 }
 
-thead {
-	font-weight:600;
+p { 
+	font-size:13px;
+	margin-bottom:4px;
 }
-
-p { font-size:13px; }
 
 .variable {
 	color:#009688;
@@ -60,4 +77,51 @@ body {
 
 .barcol {
 	width:5%;
+}
+
+.logos img {
+	margin-right: 40px;
+	margin-bottom: 0;
+	vertical-align: top;
+	width: auto;
+	float:right
+}
+
+@font-face {
+  font-family: 'Gotham-Bold';
+  src: url('../assets/fonts/Gotham-Bold.otf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Gotham-Book';
+  src: url('../assets/fonts/Gotham-Book.otf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Gotham-Light';
+  src: url('../assets/fonts/Gotham-Light.otf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+	font-family: 'Gotham-Book';
+}
+
+thead td {
+	font-family: 'Source Sans Pro', sans-serif;
+}
+
+footer p {
+	font-size:10px;
+	color: #aaa;
+}
+
+td {
+	padding-top:4px!important;
+	padding-bottom:2px!important;
 }
