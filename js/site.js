@@ -108,13 +108,13 @@ function createTable(config,data){
 	console.log(config);
 	data.slice(0,15).forEach(function(d,i){
 		console.log(d['#country+name']);
-		let html = '<tr><td>'+d['#country+name']+'</td>'
-		html += '<td class="rightalign">'+(numberWithCommas(Math.round(d['#indicator+ht+newcases']*10)/10))+'</td><td><img id="arrow_'+i+'" class="arrow" src="arrow.svg" height="20px"></td><td><div id="bar_0_'+i+'" class="bar"></bar></td>'
-		html += '<td class="rightalign">'+(numberWithCommas(d['#indicator+newcases']))+'</td><td><div id="bar_1_'+i+'" class="bar"></div></td>'
+		let html = '<tr><td><span class="index">'+(i+1)+'</span>'+d['#country+name']+'</td>'
+		html += '<td class="rightalign"><div id="bar_0_'+i+'" class="bar"></bar></td><td class="rightalign">'+(numberWithCommas(Math.round(d['#indicator+ht+newcases']*10)/10))+'</td><td class="minpadding"><img id="arrow_'+i+'" class="arrow" src="arrow.svg" height="20px"></td>'
+		html += '<td class="rightalign"><div id="bar_1_'+i+'" class="bar"></div></td><td class="rightalign">'+(numberWithCommas(d['#indicator+newcases']))+'</td>'
 		html += '<td class="rightalign">'+(numberWithCommas(d['#indicator+cumulative+deaths']))+'</td>'
 		html += '<td class="rightalign">'+(numberWithCommas(d['#indicator+newdeaths']))+'</td>'
 		html += '<td class="rightalign">'+Math.round(d['#affected+tested+per1000'])+'</td>'
-		html += '<td class="rightalign">'+(d['#value+covid+funding+hrp+txt'])+'</td><td><div id="bar_2_'+i+'" class="bar"></div></td>'
+		html += '<td class="rightalign"><div id="bar_2_'+i+'" class="bar"></div></td><td class="rightalign">'+(d['#value+covid+funding+hrp+txt'])+'</td>'
 		html += '<td class="rightalign">'+d['#affected+inneed']+'</td>'
 		html += '</tr>';
 		$('#maintable').append(html);
