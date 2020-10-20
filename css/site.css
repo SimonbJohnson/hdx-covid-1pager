@@ -2,22 +2,23 @@
 	height:10px;
 	background-color:#1ebfb3;
 	display:block;
+	float:right;
 	margin-top:5px;
 	-webkit-print-color-adjust:exact;
 }
 
 h1, h2, h3, h3, h4 {
-	font-family: 'Source Sans Pro', sans-serif;
+	font-family: 'Gotham-Bold', sans-serif;
 }
 
 h1 {
-	font-size:3.8rem;
+	font-size:1.6rem;
 	margin-bottom:8px;
 	margin-top:4px;
 }
 
 h2 {
-	font-size:1.8rem;
+	font-size:1rem;
 	text-transform: uppercase;
 	margin-bottom:8px;
 	margin-top:4px;
@@ -36,7 +37,6 @@ h2 {
 }
 
 p { 
-	font-size:13px;
 	margin-bottom:4px;
 }
 
@@ -52,14 +52,15 @@ p {
 }
 
 table {
-	font-size:11px;
 	font-family: 'Source Sans Pro', sans-serif;
+	font-size: 0.9rem;
 }
 
 body {
-  -webkit-print-color-adjust: exact;
-  margin-left:30px;
-  margin-right:30px;
+	font-family: 'Source Sans Pro', sans-serif;
+	font-size: 10px;
+	margin: 10px 30px;
+	-webkit-print-color-adjust: exact;
 }
 
 @media print { bar { -webkit-print-color-adjust: exact; } }
@@ -81,11 +82,16 @@ body {
 }
 
 .logos img {
-	margin-right: 40px;
+	margin-left: 20px;
 	margin-bottom: 0;
 	vertical-align: top;
-	width: auto;
+	height: auto;
 	float:right
+}
+
+span.index {
+	display: inline-block;
+	width: 15px;
 }
 
 @font-face {
@@ -95,31 +101,25 @@ body {
   font-style: normal;
 }
 
-@font-face {
-  font-family: 'Gotham-Book';
-  src: url('../assets/fonts/Gotham-Book.otf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
+.table thead tr td {
+	font-family: 'Gotham-Bold', sans-serif;
+	font-size: 0.8rem;
+	text-transform: uppercase;
+	vertical-align: bottom;
 }
 
-@font-face {
-  font-family: 'Gotham-Light';
-  src: url('../assets/fonts/Gotham-Light.otf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
+.table tbody tr td {
+	border-top: 1px solid #CCC;
+	line-height: 2.1;
 }
 
-body {
-	font-family: 'Gotham-Book';
-}
-
-thead td {
-	font-family: 'Source Sans Pro', sans-serif;
-}
+/*.table tbody tr td.minpadding {
+	padding-left:0;
+}*/
 
 footer p {
-	font-size:10px;
-	color: #aaa;
+	font-size: 0.9rem;
+	color: #888;
 }
 
 td {
