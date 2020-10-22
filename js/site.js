@@ -41,19 +41,19 @@ function hxlProxyToJSON(input){
 function init(dataHXLProxy,data){
 	data = prepData(dataHXLProxy,data);
 	config = calcMax(data);
-	config['#value+covid+funding+hrp+pct'] == 1;
+	config['#value+funding+hrp+pct'] = 1;
 	createTable(config,data);
 }
 
 function prepData(dataHXLProxy,data){
 	let output = dataHXLProxy;
-	output = addColumn(output,data,'national_data','#value+covid+funding+hrp+pct');
+	output = addColumn(output,data,'national_data','#value+funding+hrp+pct');
 	output.forEach(function(d){
-		if(d['#value+covid+funding+hrp+pct']==undefined){
-			d['#value+covid+funding+hrp+txt'] = '-';
-			d['#value+covid+funding+hrp+pct'] = 0
+		if(d['#value+funding+hrp+pct']==undefined){
+			d['#value+funding+hrp+txt'] = '-';
+			d['#value+funding+hrp+pct'] = -1
 		} else {
-			d['#value+covid+funding+hrp+txt'] = Math.round(d['#value+covid+funding+hrp+pct']*100)+'%';
+			d['#value+funding+hrp+txt'] = Math.round(d['#value+funding+hrp+pct']*100)+'%';
 		}
 	});
 	output = addColumn(output,data,'national_data','#affected+inneed');
@@ -67,9 +67,26 @@ function prepData(dataHXLProxy,data){
 	output = addColumn(output,data,'national_data','#affected+tested+per1000');
 	output.forEach(function(d){
 		if(d['#affected+tested+per1000']==undefined){
-			d['#affected+tested+per1000']= ''
+			d['#affected+tested+per1000']= '-'
 		}
 	});
+	output = addColumn(output,data,'national_data','#vaccination+num+ratio');
+	output.forEach(function(d){
+		if(d['#vaccination+num+ratio']==undefined){
+			d['#vaccination+num+ratio']= '-'
+		} else {
+			d['#vaccination+num+ratio']= Math.round(d['#vaccination+num+ratio']*100)+'%';
+		}
+	});
+	output = addColumn(output,data,'national_data','#value+food+num+ratio');
+	output.forEach(function(d){
+		if(d['#value+food+num+ratio']==undefined){
+			d['#value+food+num+ratio']= '-'
+		} else {
+			d['#value+food+num+ratio']= Math.round(d['#value+food+num+ratio']*100)+'%';
+		}
+	});
+	
 	return output;
 }
 
@@ -100,28 +117,33 @@ function calcMax(data){
 }
 
 function createTable(config,data){
-	barKeys = ['#indicator+ht+newcases','#indicator+newcases','#value+covid+funding+hrp+pct'];
+	barKeys = ['#value+funding+hrp+pct'];
 	data = data.sort(function(a,b){
 		return parseFloat(b['#indicator+ht+newcases']) - parseFloat(a['#indicator+ht+newcases']);
 	});
 	console.log(data);
 	console.log(config);
 	data.slice(0,15).forEach(function(d,i){
-		console.log(d['#country+name']);
+		//console.log(d['#country+name']);
 		let html = '<tr><td><span class="index">'+(i+1)+'</span>'+d['#country+name']+'</td>'
-		html += '<td class="rightalign"><div id="bar_0_'+i+'" class="bar"></bar></td><td class="rightalign">'+(numberWithCommas(Math.round(d['#indicator+ht+newcases']*10)/10))+'</td><td class="minpadding"><img id="arrow_'+i+'" class="arrow" src="arrow.svg" height="20px"></td>'
-		html += '<td class="rightalign"><div id="bar_1_'+i+'" class="bar"></div></td><td class="rightalign">'+(numberWithCommas(d['#indicator+newcases']))+'</td>'
-		html += '<td class="rightalign">'+(numberWithCommas(d['#indicator+cumulative+deaths']))+'</td>'
-		html += '<td class="rightalign">'+(numberWithCommas(d['#indicator+newdeaths']))+'</td>'
-		html += '<td class="rightalign">'+Math.round(d['#affected+tested+per1000'])+'</td>'
-		html += '<td class="rightalign"><div id="bar_2_'+i+'" class="bar"></div></td><td class="rightalign">'+(d['#value+covid+funding+hrp+txt'])+'</td>'
-		html += '<td class="rightalign">'+d['#affected+inneed']+'</td>'
+		html += '<td class="rightalign">'+(numberWithCommas(Math.round(d['#indicator+ht+newcases']*10)/10))+'</td><td class="minpadding"><img id="arrow_'+i+'" class="arrow" src="arrow.svg" height="20px"></td>'
+		html += '<td class="rightalign">'+(numberWithCommas(d['#indicator+newcases']))+'</td>'
+		html += '<td class="rightalign">'+(numberWithCommas(d['#indicator+newdeaths']))+'</td><td class="minpadding"><img id="arrow_'+i+'" class="arrow" src="arrow.svg" height="20px"></td>'
+		html += '<td class="rightalign"></td>'
+		html += '<td class="rightalign">'+d['#vaccination+num+ratio']+'</td>'
+		html += '<td class="rightalign">'+d['#value+food+num+ratio']+'</td>'
+		html += '<td class="rightalign"><div id="bar_0_'+i+'" class="bar"></div><div id="bar_0_grey_'+i+'" class="bar greybar"></div></td><td class="rightalign">'+(d['#value+funding+hrp+txt'])+'</td>'
 		html += '</tr>';
 		$('#maintable').append(html);
 		barKeys.forEach(function(k,j){
-			let id = '#bar_'+(j)+'_'+i;
-			let width = Math.floor(d[k]/config[k]*50);
-			$(id).width(width);
+			if(d[k]!=-1){
+				let id = '#bar_'+(j)+'_'+i;
+				let width = Math.floor(d[k]/config[k]*50);
+				$(id).width(width);
+				let greyID = '#bar_'+(j)+'_grey_'+i;
+				let greyWidth = 50-width;
+				$(greyID).width(greyWidth);
+			}
 		});
 		let rotate = d['#indicator+newcaseschange']/10*-45;
 		if(rotate<-45){
