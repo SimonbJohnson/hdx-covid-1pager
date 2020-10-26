@@ -74,11 +74,15 @@ body {
 @media print { bar { -webkit-print-color-adjust: exact; } }
 
 .countrycol {
-	width:15%;
+	width:10%;
 }
 
 .datacol {
-	width:10%;
+	width:11%;
+}
+
+.longdatacol {
+	width:15%;
 }
 
 .arrowcol {
