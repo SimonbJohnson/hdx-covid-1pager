@@ -140,13 +140,6 @@ function calcMax(data){
 
 function createTable(config,data){
 	barKeys = ['#value+covid+funding+hrp+pct'];
-	data = data.filter(function(d){
-		if(d['#value+covid+funding+hrp+pct']==-1){
-			return false
-		} else {
-			return true
-		}
-	});
 	data = data.sort(function(a,b){
 		return parseFloat(b['#affected+avg+infected+per100000']) - parseFloat(a['#affected+avg+infected+per100000']);
 	});
@@ -207,8 +200,19 @@ function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
+function setDate(){
+	var currentTime = new Date();
+	let month = currentTime.toLocaleString('default', { month: 'long' });
+	let day = currentTime.getDate();
+	let year = currentTime.getFullYear();
+	let currentDate = month + ' ' + day + ' ' + year;
+	console.log(currentDate);
+	$('#date').html(currentDate);
+}
+
 //load 3W data
 
-let url = 'https://proxy.hxlstandard.org/data.json?dest=data_edit&filter01=select&select-query01-01=%23date+is+max&filter02=merge&merge-url02=https%3A%2F%2Fproxy.hxlstandard.org%2Fdata.csv%3Fdest%3Ddata_view%26url%3Dhttps%253A%252F%252Fraw.githubusercontent.com%252FOCHA-DAP%252Fhdx-scraper-covid-viz%252Fmaster%252Fout_daily.json%26selector%3Dcumulative&merge-keys02=%23country%2Bcode&merge-tags02=%23affected%2C%23value%2C%23vaccination&strip-headers=on&url=https%3A%2F%2Fraw.githubusercontent.com%2FOCHA-DAP%2Fhdx-scraper-covid-viz%2Fmaster%2Fout_daily.json';
+let url = 'https://proxy.hxlstandard.org/data.json?dest=data_edit&filter01=select&select-query01-01=%23meta%2Bishrp%3DY&strip-headers=on&url=https%3A%2F%2Fraw.githubusercontent.com%2FOCHA-DAP%2Fhdx-scraper-covid-viz%2Fmaster%2Fout_daily.json';
 
+setDate();
 loadData(url);
