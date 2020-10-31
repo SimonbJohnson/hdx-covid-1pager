@@ -138,3 +138,12 @@ td {
 	padding-top:4px!important;
 	padding-bottom:2px!important;
 }
+
+.pctchange {
+	width:30px;
+	display: inline-block;
+}
+
+.arrow {
+	margin-left:10px;
+}

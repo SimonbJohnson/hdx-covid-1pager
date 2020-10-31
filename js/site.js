@@ -103,10 +103,22 @@ function prepData(dataHXLProxy,data){
 		} else {
 			d['#affected+avg+killed'] = numberWithCommas(Math.round(d['#affected+avg+killed']));
 		}
+		d['#affected+avg+change+infected+txt+per100000'] = Math.round(d['#affected+avg+change+infected+pct+per100000']);
+		if(d['#affected+avg+change+infected+txt+per100000']>0.5){
+			d['#affected+avg+change+infected+txt+per100000'] = '+'+d['#affected+avg+change+infected+txt+per100000']+'%';
+		} else {
+			d['#affected+avg+change+infected+txt+per100000'] = d['#affected+avg+change+infected+txt+per100000']+'%';
+		}
 	});
 
 	output.forEach(function(d){
 		d['#affected+avg+infected+per100000'] = Math.round(d['#affected+avg+infected+per100000']*10)/10
+		d['#affected+avg+change+killed+txt'] = Math.round(d['#affected+avg+change+killed+pct']);
+		if(d['#affected+avg+change+killed+pct']>0.5){
+			d['#affected+avg+change+killed+txt'] = '+'+d['#affected+avg+change+killed+txt']+'%';
+		} else {
+			d['#affected+avg+change+killed+txt'] = d['#affected+avg+change+killed+txt']+'%';
+		}
 	});
 	
 	return output;
@@ -147,9 +159,9 @@ function createTable(config,data){
 	console.log(config);
 	data.slice(0,15).forEach(function(d,i){
 		let html = '<tr><td><span class="index">'+(i+1)+'</span>'+d['#country+name']+'</td>'
-		html += '<td class="rightalign">'+d['#affected+avg+infected+per100000']+'</td><td class="minpadding"><img id="arrow_'+i+'" class="arrow" src="arrow.svg" height="20px"></td>'
+		html += '<td class="rightalign">'+d['#affected+avg+infected+per100000']+'<span class="pctchange">('+d['#affected+avg+change+infected+txt+per100000']+')</span><img id="arrow_'+i+'" class="arrow" src="arrow.svg" height="20px"></td>'
 		html += '<td class="rightalign">'+d['#affected+avg+infected']+'</td>'
-		html += '<td class="rightalign">'+d['#affected+avg+killed']+'</td><td class="minpadding"><img id="arrow2_'+i+'" class="arrow" src="arrow.svg" height="20px"></td>'
+		html += '<td class="rightalign">'+d['#affected+avg+killed']+'<span class="pctchange">('+d['#affected+avg+change+killed+txt']+')</span><img id="arrow2_'+i+'" class="arrow" src="arrow.svg" height="20px"></td>'
 		html += '<td class="rightalign">'+d['#affected+pct+positive+tested']+'</td>'
 		html += '<td class="rightalign">'+d['#vaccination+num+ratio']+'</td>'
 		html += '<td class="rightalign">'+d['#value+food+num+ratio']+'</td>'
@@ -205,7 +217,8 @@ function setDate(){
 	let month = currentTime.toLocaleString('default', { month: 'long' });
 	let day = currentTime.getDate();
 	let year = currentTime.getFullYear();
-	let currentDate = month + ' ' + day + ' ' + year;
+	let time = currentTime.toUTCString().substring(17,22)
+	let currentDate = day + ' ' + month + ' ' +  year +' ['+time+' UTC]';
 	console.log(currentDate);
 	$('#date').html(currentDate);
 }
