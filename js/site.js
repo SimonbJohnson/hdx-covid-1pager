@@ -157,7 +157,7 @@ function createTable(config,data){
 	});
 	console.log(data);
 	console.log(config);
-	data.slice(0,15).forEach(function(d,i){
+	data.slice(0,18).forEach(function(d,i){
 		let html = '<tr><td><span class="index">'+(i+1)+'</span>'+d['#country+name']+'</td>'
 		html += '<td class="rightalign">'+d['#affected+avg+infected+per100000']+'<span class="pctchange">('+d['#affected+avg+change+infected+txt+per100000']+')</span><img id="arrow_'+i+'" class="arrow" src="arrow.svg" height="20px"></td>'
 		html += '<td class="rightalign">'+d['#affected+avg+infected']+'</td>'
