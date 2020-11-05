@@ -147,3 +147,7 @@ td {
 .arrow {
 	margin-left:10px;
 }
+
+.page-break{
+  page-break-after:always
+} 

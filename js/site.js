@@ -50,7 +50,7 @@ function prepData(dataHXLProxy,data){
 	//output = addColumn(output,data,'national_data','#value+funding+hrp+pct');
 	output.forEach(function(d){
 		if(d['#value+covid+funding+hrp+pct']==''){
-			d['#value+covid+funding+hrp+txt'] = 'n/a';
+			d['#value+covid+funding+hrp+txt'] = 'No Data';
 			d['#value+covid+funding+hrp+pct'] = -1
 		} else {
 			d['#value+covid+funding+hrp+txt'] = Math.round(d['#value+covid+funding+hrp+pct']*100)+'%';
@@ -67,7 +67,7 @@ function prepData(dataHXLProxy,data){
 	//output = addColumn(output,data,'national_data','#affected+tested+per1000');
 	output.forEach(function(d){
 		if(d['#affected+pct+positive+tested']==''){
-			d['#affected+pct+positive+tested']= 'n/a'
+			d['#affected+pct+positive+tested']= 'No Data'
 		} else {
 			d['#affected+pct+positive+tested'] = Math.round(d['#affected+pct+positive+tested']*100) + '%'
 		}
@@ -75,7 +75,7 @@ function prepData(dataHXLProxy,data){
 	//output = addColumn(output,data,'national_data','#vaccination+num+ratio');
 	output.forEach(function(d){
 		if(d['#vaccination+num+ratio']==''){
-			d['#vaccination+num+ratio']= 'n/a'
+			d['#vaccination+num+ratio']= 'No Data'
 		} else {
 			d['#vaccination+num+ratio']= Math.round(d['#vaccination+num+ratio']*100)+'%';
 		}
@@ -83,7 +83,7 @@ function prepData(dataHXLProxy,data){
 	//output = addColumn(output,data,'national_data','#value+food+num+ratio');
 	output.forEach(function(d){
 		if(d['#value+food+num+ratio']==undefined){
-			d['#value+food+num+ratio']= 'n/a'
+			d['#value+food+num+ratio']= 'No Data'
 		} else {
 			d['#value+food+num+ratio']= Math.round(d['#value+food+num+ratio']*100)+'%';
 		}
@@ -91,7 +91,7 @@ function prepData(dataHXLProxy,data){
 
 	output.forEach(function(d){
 		if(d['#affected+avg+infected']==undefined){
-			d['#affected+avg+infected'] = 'n/a'
+			d['#affected+avg+infected'] = 'No Data'
 		} else {
 			d['#affected+avg+infected'] = numberWithCommas(Math.round(d['#affected+avg+infected']));
 		}
@@ -99,15 +99,21 @@ function prepData(dataHXLProxy,data){
 	
 	output.forEach(function(d){
 		if(d['#affected+avg+killed']==undefined){
-			d['#affected+avg+killed'] = 'n/a'
+			d['#affected+avg+killed'] = 'No Data'
 		} else {
 			d['#affected+avg+killed'] = numberWithCommas(Math.round(d['#affected+avg+killed']));
 		}
+
 		d['#affected+avg+change+infected+txt+per100000'] = Math.round(d['#affected+avg+change+infected+pct+per100000']);
 		if(d['#affected+avg+change+infected+txt+per100000']>0.5){
 			d['#affected+avg+change+infected+txt+per100000'] = '+'+d['#affected+avg+change+infected+txt+per100000']+'%';
 		} else {
 			d['#affected+avg+change+infected+txt+per100000'] = d['#affected+avg+change+infected+txt+per100000']+'%';
+		}
+
+		if(d['#affected+avg+change+infected+pct+per100000']=='inf'){
+			d['#affected+avg+change+infected+pct+per100000']==1000
+			d['#affected+avg+change+infected+txt+per100000'] = 'INF';
 		}
 	});
 
@@ -119,6 +125,10 @@ function prepData(dataHXLProxy,data){
 		} else {
 			d['#affected+avg+change+killed+txt'] = d['#affected+avg+change+killed+txt']+'%';
 		}
+		if(d['#affected+avg+change+killed+pct']=='inf'){
+			d['#affected+avg+change+killed+pct']==1000
+			d['#affected+avg+change+killed+txt'] = 'INF';
+		}		
 	});
 	
 	return output;
@@ -157,7 +167,8 @@ function createTable(config,data){
 	});
 	console.log(data);
 	console.log(config);
-	data.slice(0,18).forEach(function(d,i){
+	//data = data.slice(0,18);
+	data.forEach(function(d,i){
 		let html = '<tr><td><span class="index">'+(i+1)+'</span>'+d['#country+name']+'</td>'
 		html += '<td class="rightalign">'+d['#affected+avg+infected+per100000']+'<span class="pctchange">('+d['#affected+avg+change+infected+txt+per100000']+')</span><img id="arrow_'+i+'" class="arrow" src="arrow.svg" height="20px"></td>'
 		html += '<td class="rightalign">'+d['#affected+avg+infected']+'</td>'
@@ -167,7 +178,12 @@ function createTable(config,data){
 		html += '<td class="rightalign">'+d['#value+food+num+ratio']+'</td>'
 		html += '<td class="rightalign"><div id="bar_0_grey_'+i+'" class="bar greybar"></div><div id="bar_0_'+i+'" class="bar"></div></td><td class="rightalign">'+(d['#value+covid+funding+hrp+txt'])+'</td>'
 		html += '</tr>';
-		$('#maintable').append(html);
+		if(i<20){
+			$('#maintable').append(html);
+		} else {
+			$('#maintable2').append(html);
+		}
+		
 
 		barKeys.forEach(function(k,j){
 			if(d[k]!=-1){
