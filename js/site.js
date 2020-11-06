@@ -49,11 +49,11 @@ function prepData(dataHXLProxy,data){
 	let output = dataHXLProxy;
 	//output = addColumn(output,data,'national_data','#value+funding+hrp+pct');
 	output.forEach(function(d){
-		if(d['#value+covid+funding+hrp+pct']==''){
-			d['#value+covid+funding+hrp+txt'] = 'No Data';
-			d['#value+covid+funding+hrp+pct'] = -1
+		if(d['#value+funding+hrp+pct']==''){
+			d['#value+funding+hrp+txt'] = 'No Data';
+			d['#value+funding+hrp+pct'] = -1
 		} else {
-			d['#value+covid+funding+hrp+txt'] = Math.round(d['#value+covid+funding+hrp+pct']*100)+'%';
+			d['#value+funding+hrp+txt'] = Math.round(d['#value+funding+hrp+pct']*100)+'%';
 		}
 	});
 	//output = addColumn(output,data,'national_data','#affected+inneed');
@@ -118,7 +118,7 @@ function prepData(dataHXLProxy,data){
 	});
 
 	output.forEach(function(d){
-		d['#affected+avg+infected+per100000'] = Math.round(d['#affected+avg+infected+per100000']*10)/10
+		d['#affected+avg+infected+per100000'] = (Math.round(d['#affected+avg+infected+per100000']*10)/10).toFixed(1);
 		d['#affected+avg+change+killed+txt'] = Math.round(d['#affected+avg+change+killed+pct']);
 		if(d['#affected+avg+change+killed+pct']>0.5){
 			d['#affected+avg+change+killed+txt'] = '+'+d['#affected+avg+change+killed+txt']+'%';
@@ -161,7 +161,7 @@ function calcMax(data){
 }
 
 function createTable(config,data){
-	barKeys = ['#value+covid+funding+hrp+pct'];
+	barKeys = ['#value+funding+hrp+pct'];
 	data = data.sort(function(a,b){
 		return parseFloat(b['#affected+avg+infected+per100000']) - parseFloat(a['#affected+avg+infected+per100000']);
 	});
@@ -176,7 +176,7 @@ function createTable(config,data){
 		html += '<td class="rightalign">'+d['#affected+pct+positive+tested']+'</td>'
 		html += '<td class="rightalign">'+d['#vaccination+num+ratio']+'</td>'
 		html += '<td class="rightalign">'+d['#value+food+num+ratio']+'</td>'
-		html += '<td class="rightalign"><div id="bar_0_grey_'+i+'" class="bar greybar"></div><div id="bar_0_'+i+'" class="bar"></div></td><td class="rightalign">'+(d['#value+covid+funding+hrp+txt'])+'</td>'
+		html += '<td class="rightalign"><div id="bar_0_grey_'+i+'" class="bar greybar"></div><div id="bar_0_'+i+'" class="bar"></div></td><td class="rightalign">'+(d['#value+funding+hrp+txt'])+'</td>'
 		html += '</tr>';
 		if(i<20){
 			$('#maintable').append(html);
