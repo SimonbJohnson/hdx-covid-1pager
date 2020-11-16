@@ -176,7 +176,7 @@ function createTable(config,data){
 		html += '<td class="rightalign">'+d['#affected+pct+positive+tested']+'</td>'
 		html += '<td class="rightalign">'+d['#vaccination+num+ratio']+'</td>'
 		html += '<td class="rightalign">'+d['#value+food+num+ratio']+'</td>'
-		html += '<td class="rightalign"><div id="bar_0_grey_'+i+'" class="bar greybar"></div><div id="bar_0_'+i+'" class="bar"></div></td><td class="rightalign">'+(d['#value+funding+hrp+txt'])+'</td>'
+		html += '<td class="rightalign norightpad"><div id="bar_0_grey_'+i+'" class="bar greybar"></div><div id="bar_0_'+i+'" class="bar"></div></td><td class="rightalign noleftpad">'+(d['#value+funding+hrp+txt'])+'</td>'
 		html += '</tr>';
 		if(i<20){
 			$('#maintable').append(html);

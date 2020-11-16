@@ -150,4 +150,12 @@ td {
 
 .page-break{
   page-break-after:always
-} 
+}
+
+.norightpad{
+	padding-right:0px!important;
+}
+
+.noleftpad{
+	padding-left:0px!important;
+}
