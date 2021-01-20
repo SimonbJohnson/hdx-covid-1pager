@@ -66,10 +66,8 @@ function prepData(dataHXLProxy,data){
 	});
 	//output = addColumn(output,data,'national_data','#affected+tested+per1000');
 	output.forEach(function(d){
-		if(d['#affected+pct+positive+tested']==''){
-			d['#affected+pct+positive+tested']= 'No Data'
-		} else {
-			d['#affected+pct+positive+tested'] = Math.round(d['#affected+pct+positive+tested']*100) + '%'
+		if(d['#affected+avg+per1000+tested']==''){
+			d['#affected+avg+per1000+tested']= 'No Data'
 		}
 	});
 	//output = addColumn(output,data,'national_data','#vaccination+num+ratio');
@@ -173,7 +171,7 @@ function createTable(config,data){
 		html += '<td class="rightalign">'+d['#affected+avg+infected+per100000']+'<span class="pctchange">('+d['#affected+avg+change+infected+txt+per100000']+')</span><img id="arrow_'+i+'" class="arrow" src="arrow.svg" height="20px"></td>'
 		html += '<td class="rightalign">'+d['#affected+avg+infected']+'</td>'
 		html += '<td class="rightalign">'+d['#affected+avg+killed']+'<span class="pctchange">('+d['#affected+avg+change+killed+txt']+')</span><img id="arrow2_'+i+'" class="arrow" src="arrow.svg" height="20px"></td>'
-		html += '<td class="rightalign">'+d['#affected+pct+positive+tested']+'</td>'
+		html += '<td class="rightalign">'+d['#affected+avg+per1000+tested']+'</td>'
 		html += '<td class="rightalign">'+d['#vaccination+num+ratio']+'</td>'
 		html += '<td class="rightalign">'+d['#value+food+num+ratio']+'</td>'
 		html += '<td class="rightalign norightpad"><div id="bar_0_grey_'+i+'" class="bar greybar"></div><div id="bar_0_'+i+'" class="bar"></div></td><td class="rightalign noleftpad">'+(d['#value+funding+hrp+txt'])+'</td>'
@@ -241,7 +239,7 @@ function setDate(){
 
 //load 3W data
 
-let url = 'https://proxy.hxlstandard.org/data.json?dest=data_edit&filter01=select&select-query01-01=%23meta%2Bishrp%3DY&strip-headers=on&url=https%3A%2F%2Fraw.githubusercontent.com%2FOCHA-DAP%2Fhdx-scraper-covid-viz%2Fmaster%2Fout_daily.json';
+let url = 'https://proxy.hxlstandard.org/data.json?dest=data_edit&filter01=select&select-query01-01=%23meta%2Bfordaily%3DY&strip-headers=on&url=https%3A%2F%2Fraw.githubusercontent.com%2FOCHA-DAP%2Fhdx-scraper-covid-viz%2Fmaster%2Fout_daily.json';
 
 setDate();
 loadData(url);
