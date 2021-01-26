@@ -239,7 +239,7 @@ function setDate(){
 
 //load 3W data
 
-let url = 'https://proxy.hxlstandard.org/data.json?dest=data_edit&filter01=select&select-query01-01=%23meta%2Bfordaily%3DY&strip-headers=on&url=https%3A%2F%2Fraw.githubusercontent.com%2FOCHA-DAP%2Fhdx-scraper-covid-viz%2Fmaster%2Fout_daily.json';
+let url = 'https://proxy.hxlstandard.org/data.json?dest=data_edit&filter01=select&select-query01-01=%23meta%2Bishrp%3DY&strip-headers=on&url=https%3A%2F%2Fraw.githubusercontent.com%2FOCHA-DAP%2Fhdx-scraper-covid-viz%2Fmaster%2Fout_daily.json';
 
 setDate();
 loadData(url);
