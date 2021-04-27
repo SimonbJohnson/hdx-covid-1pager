@@ -48,7 +48,7 @@ function init(dataHXLProxy,data){
 function prepData(dataHXLProxy,data){
 	let output = dataHXLProxy;
 	//output = addColumn(output,data,'national_data','#value+funding+hrp+pct');
-	output.forEach(function(d){
+	/*output.forEach(function(d){
 		if(d['#value+funding+hrp+pct']==''){
 			d['#value+funding+hrp+txt'] = 'No Data';
 			d['#value+funding+hrp+pct'] = -1
@@ -87,7 +87,7 @@ function prepData(dataHXLProxy,data){
 		}
 	});
 
-	output.forEach(function(d){
+	/*output.forEach(function(d){
 		if(d['#affected+avg+infected']==undefined){
 			d['#affected+avg+infected'] = 'No Data'
 		} else {
@@ -102,21 +102,11 @@ function prepData(dataHXLProxy,data){
 			d['#affected+avg+killed'] = numberWithCommas(Math.round(d['#affected+avg+killed']));
 		}
 
-		d['#affected+avg+change+infected+txt+per100000'] = Math.round(d['#affected+avg+change+infected+pct+per100000']);
-		if(d['#affected+avg+change+infected+txt+per100000']>0.5){
-			d['#affected+avg+change+infected+txt+per100000'] = '+'+d['#affected+avg+change+infected+txt+per100000']+'%';
-		} else {
-			d['#affected+avg+change+infected+txt+per100000'] = d['#affected+avg+change+infected+txt+per100000']+'%';
-		}
-
-		if(d['#affected+avg+change+infected+pct+per100000']=='inf'){
-			d['#affected+avg+change+infected+pct+per100000']==1000
-			d['#affected+avg+change+infected+txt+per100000'] = 'INF';
-		}
 	});
 
 	output.forEach(function(d){
-		d['#affected+avg+infected+per100000'] = (Math.round(d['#affected+avg+infected+per100000']*10)/10).toFixed(1);
+		
+		
 		d['#affected+avg+change+killed+txt'] = Math.round(d['#affected+avg+change+killed+pct']);
 		if(d['#affected+avg+change+killed+pct']>0.5){
 			d['#affected+avg+change+killed+txt'] = '+'+d['#affected+avg+change+killed+txt']+'%';
@@ -127,21 +117,95 @@ function prepData(dataHXLProxy,data){
 			d['#affected+avg+change+killed+pct']==1000
 			d['#affected+avg+change+killed+txt'] = 'INF';
 		}		
+	});*/
+
+	output.forEach(function(d){
+		//column 1
+		d['#affected+infected+new+per100000+weekly'] = (Math.round(d['#affected+infected+new+per100000+weekly']*10)/10).toFixed(1);
+		
+		//column 1 brackets
+		//create text version for show and use pct for arrow calcs
+		d['#affected+infected+new+pct+txt+weekly'] = Math.round(d['#affected+infected+new+pct+weekly']*100);
+		if(d['#affected+infected+new+pct+txt+weekly']>0.5){
+			d['#affected+infected+new+pct+txt+weekly'] = '+'+d['#affected+infected+new+pct+txt+weekly']+'%';
+		} else {
+			d['#affected+infected+new+pct+txt+weekly'] = d['#affected+infected+new+pct+txt+weekly']+'%';
+		}
+
+		if(d['#affected+infected+new+pct+weekly']=='inf'){
+			d['#affected+infected+new+pct+weekly']==1000
+			d['#affected+infected+new+pct+txt+weekly'] = 'INF';
+		}
+
+		//column 2
+		d['#affected+killed+new+per100000+weekly'] = (Math.round(d['#affected+killed+new+per100000+weekly']*10)/10).toFixed(1);
+
+		//column 2 brackets
+		//create text version for show and use pct for arrow calcs
+		d['#affected+killed+new+pct+txt+weekly'] = Math.round(d['#affected+killed+new+pct+weekly']*100);
+
+		if(d['#affected+killed+new+pct+txt+weekly']>0.5){
+			d['#affected+killed+new+pct+txt+weekly'] = '+'+d['#affected+killed+new+pct+txt+weekly']+'%';
+		} else {
+			d['#affected+killed+new+pct+txt+weekly'] = d['#affected+killed+new+pct+txt+weekly']+'%';
+		}
+
+		if(d['#affected+killed+new+pct+weekly']=='inf'){
+			d['#affected+killed+new+pct+weekly']==1000
+			d['#affected+killed+new+pct+txt+weekly'] = 'INF';
+		}
+
+		//column 3
+		if(d['#capacity+delivered+doses+total']==undefined){
+			d['#capacity+delivered+doses+total'] = 'No Data'
+		} else {
+			d['#capacity+delivered+doses+total'] = numberWithCommas(Math.round(d['#capacity+delivered+doses+total']));
+		}
+
+		//column 4
+		if(d['#targeted+delivered+doses+pct']==undefined){
+			d['#targeted+delivered+doses+pct'] = 'No Data'
+		} else {
+			d['#targeted+delivered+doses+pct'] = Math.round(d['#targeted+delivered+doses+pct']*100)+'%';
+		}
+
+		//column 5
+		if(d['#capacity+administered+doses+total']==undefined){
+			d['#capacity+administered+doses+total'] = 'No Data'
+		} else {
+			d['#capacity+administered+doses+total'] = numberWithCommas(Math.round(d['#capacity+administered+doses+total']));
+		}
+
+		//column 6
+		if(d['#impact+type']==undefined){
+			d['#impact+type'] = 'No Data'
+		}
+		if(d['#impact+type']=='Closed due to COVID-19'){
+			d['#impact+type'] = 'Closed'
+		}
+
+		//column 7
+		if(d['#value+food+num+ratio']==undefined){
+			d['#value+food+num+ratio']= 'No Data'
+		} else {
+			d['#value+food+num+ratio']= Math.round(d['#value+food+num+ratio']*100)+'%';
+		}
+
+		
+
+		//column 8
+
+		if(d['#value+funding+hrp+pct']==''){
+			d['#value+funding+hrp+txt'] = 'No Data';
+			d['#value+funding+hrp+pct'] = -1
+		} else {
+			d['#value+funding+hrp+txt'] = Math.round(d['#value+funding+hrp+pct']*100)+'%';
+		}
+		
 	});
 	
 	return output;
 }
-
-/*function addColumn(output,data,rootKey,key){
-	output.forEach(function(d){
-		data[rootKey].forEach(function(d2){
-			if(d['#country+code+v_iso3']==d2['#country+code']){
-				d[key] = d2[key];
-			}
-		})
-	});
-	return output;
-};*/
 
 function calcMax(data){
 	config = {}
@@ -167,16 +231,17 @@ function createTable(config,data){
 	console.log(config);
 	//data = data.slice(0,18);
 	data.forEach(function(d,i){
-		let html = '<tr><td><span class="index">'+(i+1)+'</span>'+d['#country+name']+'</td>'
-		html += '<td class="rightalign">'+d['#affected+avg+infected+per100000']+'<span class="pctchange">('+d['#affected+avg+change+infected+txt+per100000']+')</span><img id="arrow_'+i+'" class="arrow" src="arrow.svg" height="20px"></td>'
-		html += '<td class="rightalign">'+d['#affected+avg+infected']+'</td>'
-		html += '<td class="rightalign">'+d['#affected+avg+killed']+'<span class="pctchange">('+d['#affected+avg+change+killed+txt']+')</span><img id="arrow2_'+i+'" class="arrow" src="arrow.svg" height="20px"></td>'
-		html += '<td class="rightalign">'+d['#affected+avg+per1000+tested']+'</td>'
-		html += '<td class="rightalign">'+d['#vaccination+num+ratio']+'</td>'
-		html += '<td class="rightalign">'+d['#value+food+num+ratio']+'</td>'
-		html += '<td class="rightalign norightpad"><div id="bar_0_grey_'+i+'" class="bar greybar"></div><div id="bar_0_'+i+'" class="bar"></div></td><td class="rightalign noleftpad">'+(d['#value+funding+hrp+txt'])+'</td>'
+		let html = '<tr><td><span class="index">'+(i+1)+'</span>'+d['#country+name']+'</td>';
+		html += '<td class="rightalign">'+d['#affected+infected+new+per100000+weekly']+'<span class="pctchange">('+d['#affected+infected+new+pct+txt+weekly']+')</span><img id="arrow_'+i+'" class="arrow" src="arrow.svg" height="20px"></td>';
+		html += '<td class="rightalign">'+d['#affected+killed+new+per100000+weekly']+'<span class="pctchange">('+d['#affected+killed+new+pct+txt+weekly']+')</span><img id="arrow2_'+i+'" class="arrow" src="arrow.svg" height="20px"></td>';
+		html += '<td class="rightalign">'+d['#capacity+delivered+doses+total']+'</td>';
+		html += '<td class="rightalign">'+d['#targeted+delivered+doses+pct']+'</td>';
+		html += '<td class="rightalign">'+d['#capacity+administered+doses+total']+'</td>';
+		html += '<td class="rightalign">'+d['#impact+type']+'</td>';
+		html += '<td class="rightalign">'+d['#value+food+num+ratio']+'</td>';
+		html += '<td class="rightalign norightpad"><div id="bar_0_grey_'+i+'" class="bar greybar"></div><div id="bar_0_'+i+'" class="bar"></div></td><td class="rightalign noleftpad">'+(d['#value+funding+hrp+txt'])+'</td>';
 		html += '</tr>';
-		if(i<20){
+		if(i<18){
 			$('#maintable').append(html);
 		} else {
 			$('#maintable2').append(html);
@@ -194,7 +259,7 @@ function createTable(config,data){
 			}
 		});
 
-		let rotate = d['#affected+avg+change+infected+pct+per100000']/10*-45;
+		let rotate = d['#affected+infected+new+pct+weekly']*10*-45;
 		if(rotate<-45){
 			rotate = -45
 		}
@@ -207,7 +272,7 @@ function createTable(config,data){
 	        "transform": "rotate("+rotate+"deg)"
     	});
 
-    	rotate = d['#affected+avg+change+killed+pct']/10*-45;
+    	rotate = d['#affected+killed+new+pct+weekly']*10*-45;
 		if(rotate<-45){
 			rotate = -45
 		}
@@ -239,7 +304,7 @@ function setDate(){
 
 //load 3W data
 
-let url = 'https://proxy.hxlstandard.org/data.json?dest=data_edit&filter01=select&select-query01-01=%23meta%2Bishrp%3DY&strip-headers=on&url=https%3A%2F%2Fraw.githubusercontent.com%2FOCHA-DAP%2Fhdx-scraper-covid-viz%2Fmaster%2Fout_daily.json';
+let url = 'https://proxy.hxlstandard.org/data.json?dest=data_edit&filter01=select&select-query01-01=%23meta%2Bishrp%3DY&strip-headers=on&url=https://raw.githubusercontent.com/OCHA-DAP/hdx-scraper-covid-viz/who_epiweek/out_daily.json';
 
 setDate();
 loadData(url);
