@@ -138,7 +138,7 @@ function prepData(dataHXLProxy,data){
 		}
 
 		//column 2
-		d['#affected+killed+new+per100000+weekly'] = (Math.round(d['#affected+killed+new+per100000+weekly']*10)/10).toFixed(1);
+		//d['#affected+killed+new+weekly'] = (Math.round(d['#affected+killed+new+weekly']*10)/10).toFixed(1);
 
 		//column 2 brackets
 		//create text version for show and use pct for arrow calcs
@@ -233,7 +233,7 @@ function createTable(config,data){
 	data.forEach(function(d,i){
 		let html = '<tr><td><span class="index">'+(i+1)+'</span>'+d['#country+name']+'</td>';
 		html += '<td class="rightalign">'+d['#affected+infected+new+per100000+weekly']+'<span class="pctchange">('+d['#affected+infected+new+pct+txt+weekly']+')</span><img id="arrow_'+i+'" class="arrow" src="arrow.svg" height="20px"></td>';
-		html += '<td class="rightalign">'+d['#affected+killed+new+per100000+weekly']+'<span class="pctchange">('+d['#affected+killed+new+pct+txt+weekly']+')</span><img id="arrow2_'+i+'" class="arrow" src="arrow.svg" height="20px"></td>';
+		html += '<td class="rightalign">'+d['#affected+killed+new+weekly']+'<span class="pctchange">('+d['#affected+killed+new+pct+txt+weekly']+')</span><img id="arrow2_'+i+'" class="arrow" src="arrow.svg" height="20px"></td>';
 		html += '<td class="rightalign">'+d['#capacity+delivered+doses+total']+'</td>';
 		html += '<td class="rightalign">'+d['#targeted+delivered+doses+pct']+'</td>';
 		html += '<td class="rightalign">'+d['#capacity+administered+doses+total']+'</td>';
@@ -304,7 +304,7 @@ function setDate(){
 
 //load 3W data
 
-let url = 'https://proxy.hxlstandard.org/data.json?dest=data_edit&filter01=select&select-query01-01=%23meta%2Bishrp%3DY&strip-headers=on&url=https://raw.githubusercontent.com/OCHA-DAP/hdx-scraper-covid-viz/who_epiweek/out_daily.json';
+let url = 'https://proxy.hxlstandard.org/data.json?dest=data_edit&filter01=select&select-query01-01=%23meta%2Bishrp%3DY&strip-headers=on&url=https://raw.githubusercontent.com/OCHA-DAP/hdx-scraper-covid-viz/master/out_daily.json';
 
 setDate();
 loadData(url);
