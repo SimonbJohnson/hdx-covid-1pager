@@ -225,7 +225,7 @@ function calcMax(data){
 function createTable(config,data){
 	barKeys = ['#value+funding+hrp+pct'];
 	data = data.sort(function(a,b){
-		return parseFloat(b['#affected+avg+infected+per100000']) - parseFloat(a['#affected+avg+infected+per100000']);
+		return parseFloat(b['#affected+infected+new+per100000+weekly']) - parseFloat(a['#affected+infected+new+per100000+weekly']);
 	});
 	console.log(data);
 	console.log(config);
