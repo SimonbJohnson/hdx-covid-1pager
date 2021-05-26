@@ -4,6 +4,7 @@ function loadData(url){
 	    url: url, 
 	    dataType: 'json',
 	    success:function(response){
+	    	console.log(response);
 	        let dataHXL= hxlProxyToJSON(response);
 	        init(dataHXL);
 	    }
@@ -30,8 +31,15 @@ function hxlProxyToJSON(input){
         } else {
             var row = {};
             e.forEach(function(e2,i2){
-                row[keys[i2]] = e2;
+            	if(e2 == ""){
+            		row[keys[i2]] = undefined;
+            	} else {
+            		row[keys[i2]] = e2;
+            	}
+                
+
             });
+            console.log(row);
             output.push(row);
         }
     });
@@ -134,7 +142,7 @@ function prepData(dataHXLProxy,data){
 
 		if(d['#affected+infected+new+pct+weekly']=='inf'){
 			d['#affected+infected+new+pct+weekly']==1000
-			d['#affected+infected+new+pct+txt+weekly'] = 'INF';
+			d['#affected+infected+new+pct+txt+weekly'] = 'N/A';
 		}
 
 		//column 2
@@ -152,7 +160,7 @@ function prepData(dataHXLProxy,data){
 
 		if(d['#affected+killed+new+pct+weekly']=='inf'){
 			d['#affected+killed+new+pct+weekly']==1000
-			d['#affected+killed+new+pct+txt+weekly'] = 'INF';
+			d['#affected+killed+new+pct+txt+weekly'] = 'N/A';
 		}
 
 		//column 3
