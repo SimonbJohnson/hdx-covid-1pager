@@ -6,6 +6,7 @@ function loadData(url){
 	    success:function(response){
 	    	console.log(response);
 	        let dataHXL= hxlProxyToJSON(response);
+	        console.log(dataHXL);
 	        init(dataHXL);
 	    }
 	});
@@ -31,11 +32,12 @@ function hxlProxyToJSON(input){
         } else {
             var row = {};
             e.forEach(function(e2,i2){
-            	if(e2 == ""){
-            		row[keys[i2]] = undefined;
-            	} else {
-            		row[keys[i2]] = e2;
-            	}
+            	row[keys[i2]] = e2;
+            	//if(e2 == ""){
+            	//	row[keys[i2]] = undefined;
+            	//} else {
+            	//	
+            	//}
                 
 
             });
@@ -202,12 +204,14 @@ function prepData(dataHXLProxy,data){
 		
 
 		//column 8
-
+		console.log(d['#value+funding+hrp+pct']);
 		if(d['#value+funding+hrp+pct']==''){
 			d['#value+funding+hrp+txt'] = 'No Data';
 			d['#value+funding+hrp+pct'] = -1
+			console.log('not a number')
 		} else {
 			d['#value+funding+hrp+txt'] = Math.round(d['#value+funding+hrp+pct']*100)+'%';
+			console.log('number')
 		}
 		
 	});
